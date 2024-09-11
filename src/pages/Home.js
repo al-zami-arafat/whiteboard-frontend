@@ -1,6 +1,6 @@
 // src/pages/Home.js
 import React, { useEffect, useState } from 'react';
-import { fetchDrawings } from '../services/api';
+import { fetchDrawings, deleteDrawing } from '../services/api';
 import { Link } from 'react-router-dom';
 
 const Home = () => {
@@ -14,6 +14,10 @@ const Home = () => {
         loadDrawings();
     }, []);
 
+    async function handleDelete(id) {
+        await deleteDrawing(id)
+    }
+
     return (
         <div>
             <h1>All Drawings</h1>
@@ -21,10 +25,11 @@ const Home = () => {
                 {drawings.map(drawing => (
                     <li key={drawing._id}>
                         <Link to={`/drawing/${drawing._id}`}>{drawing.boardName}</Link>
+                        <button onClick={() => handleDelete(drawing._id)}>delete</button>
                     </li>
                 ))}
             </ul>
-            <Link to="/new-drawing">Create New Drawing</Link>
+            <Link to="/drawing-create">Create New Drawing</Link>
         </div>
     );
 };

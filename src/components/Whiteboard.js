@@ -64,7 +64,7 @@ const Whiteboard = ({ canvasRef, ctxRef, elements, setElements, tool, color, set
                             roughness: 0
                         });
                 }
-                else if (element.type === "rect") {
+                else if (element.type === "rectangle") {
                     roughCanvas.draw(
                         roughGenerator.rectangle(
                             element.offsetX,
@@ -140,11 +140,11 @@ const Whiteboard = ({ canvasRef, ctxRef, elements, setElements, tool, color, set
                 }])
 
         }
-        else if (tool === "rect") {
+        else if (tool === "rectangle") {
             setElements(prevElements => [
                 ...prevElements,
                 {
-                    type: "rect",
+                    type: "rectangle",
                     offsetX,
                     offsetY,
                     height: 0,
@@ -223,7 +223,7 @@ const Whiteboard = ({ canvasRef, ctxRef, elements, setElements, tool, color, set
                     })
                 )
             }
-            else if (tool === "rect") {
+            else if (tool === "rectangle") {
                 setElements((prevElements) =>
                     prevElements.map((ele, index) => {
                         if (index === elements.length - 1) {

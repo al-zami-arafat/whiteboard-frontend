@@ -2,8 +2,14 @@ import { useState, useRef, useEffect } from 'react'
 import Whiteboard from '../components/Whiteboard'
 import './style.css'
 import { AiOutlineHome } from "react-icons/ai";
+import { updateDrawing, createDrawing } from '../services/api';
+import { useParams } from 'react-router-dom';
+
 
 const RoomPage = () => {
+    const params = useParams();
+    const isIdEmpty = (obj) => Object.keys(obj).length === 0;
+
     const [tool, setTool] = useState("pencil")
     const [color, setColor] = useState("color")
     const [elements, setElements] = useState([])
@@ -11,6 +17,8 @@ const RoomPage = () => {
 
     const canvasRef = useRef(null)
     const ctxRef = useRef(null)
+    const [drawing, setDrawing] = useState(null);
+
     function handleClear() {
         const canvas = canvasRef.current
         const context = canvas.getContext("2d")
@@ -47,6 +55,54 @@ const RoomPage = () => {
         ])
 
     }
+    async function handleSave() {
+        const drawing = {
+            "boardName": "Sample Board",
+            "createdBy": "User2"
+        }
+
+        const array = []
+
+        for (let element of elements) {
+            const obj = {
+                elementType: element.type,
+                position: { x: element.width, y: element.height },
+                [element.type]: {
+                    points: element.type === 'line' ? [{ "x": element.offsetX, "y": element.offsetY }] : element.path,
+                    strokeColor: element.color,
+                }
+            }
+            array.push(obj)
+        }
+
+        const updatedDrawing = { ...drawing, elements: array };
+        console.error("🥳 ~ handleSave ~ updatedDrawing:", updatedDrawing)
+        await createDrawing(updatedDrawing);
+    }
+    async function handleUpdate() {
+        const drawing = {
+            "boardName": "Sample Board",
+            "createdBy": "User2"
+        }
+
+        const array = []
+
+        for (let element of elements) {
+            const obj = {
+                elementType: element.type,
+                position: { x: element.width, y: element.height },
+                [element.type]: {
+                    points: element.type === 'line' ? [{ "x": element.offsetX, "y": element.offsetY }] : element.path,
+                    strokeColor: element.color,
+                }
+            }
+            array.push(obj)
+        }
+
+        const updatedDrawing = { ...drawing, elements: array };
+        console.error("🥳 ~ handleSave ~ updatedDrawing:", updatedDrawing)
+        await updateDrawing(params, updatedDrawing);
+    }
 
 
     return (
@@ -78,8 +134,8 @@ const RoomPage = () => {
                             type="radio"
                             id="rectangle"
                             name="tool"
-                            checked={tool === "rect"}
-                            value="rect"
+                            checked={tool === "rectangle"}
+                            value="rectangle"
                             onChange={(e) => setTool(e.target.value)} />
                         <label htmlFor="rectangle">Rectangle</label>
                     </div>
@@ -122,6 +178,16 @@ const RoomPage = () => {
                 <div>
                     <button className="mx-2 bg-red-500 shadow-lg rounded-md px-2 py-1 clear" onClick={handleClear}>Clear Canvas</button>
                 </div>
+                {isIdEmpty(params) ?
+                    <div>
+                        <button className="mx-2 bg-red-500 shadow-lg rounded-md px-2 py-1 clear" onClick={handleSave}>Save Changes</button>
+                    </div>
+                    :
+                    <div>
+                        <button className="mx-2 bg-red-500 shadow-lg rounded-md px-2 py-1 clear" onClick={handleUpdate}>Update Changes</button>
+                    </div>
+                }
+
 
                 <nav class="navbar">
                     <ul class="navbar__menu">
