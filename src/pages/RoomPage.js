@@ -1,7 +1,9 @@
 import { useState, useRef, useEffect } from 'react'
 import Whiteboard from '../components/Whiteboard'
 import './style.css'
-import { AiOutlineHome } from "react-icons/ai";
+import { AiOutlineLine, AiOutlineHome, AiOutlineUndo, AiOutlineRedo, AiOutlineClear } from "react-icons/ai";
+import { BiColor, BiPencil, BiRectangle, BiCircle, BiSave, BiText } from "react-icons/bi";
+import { BsEgg } from "react-icons/bs";
 import { updateDrawing, createDrawing } from '../services/api';
 import { useParams } from 'react-router-dom';
 
@@ -106,8 +108,8 @@ const RoomPage = () => {
 
 
     return (
-        <div className='bg-purple-800 w-[100%] h-[100vh] flex flex-col justify-center items-center'>
-            <div className='flex p-2'>
+        <div>
+            {/* <div className='flex p-2'>
                 <div className='flex'>
                     <div className='mx-2 text-white'>
                         <input
@@ -187,36 +189,182 @@ const RoomPage = () => {
                         <button className="mx-2 bg-red-500 shadow-lg rounded-md px-2 py-1 clear" onClick={handleUpdate}>Update Changes</button>
                     </div>
                 }
+            </div> */}
 
-
-                <nav class="navbar">
-                    <ul class="navbar__menu">
-                        <li class="navbar__item">
-                            <a href="#" class="navbar__link"><AiOutlineHome /><span>Home</span></a>
-                        </li>
-                        <li class="navbar__item">
-                            <a href="#" class="navbar__link"><i data-feather="message-square"></i><span>Messages</span></a>
-                        </li>
-                        <li class="navbar__item">
-                            <a href="#" class="navbar__link"><i data-feather="users"></i><span>Customers</span></a>
-                        </li>
-                        <li class="navbar__item">
-                            <a href="#" class="navbar__link"><i data-feather="folder"></i><span>Projects</span></a>
-                        </li>
-                        <li class="navbar__item">
-                            <a href="#" class="navbar__link"><i data-feather="archive"></i><span>Resources</span></a>
-                        </li>
-                        <li class="navbar__item">
-                            <a href="#" class="navbar__link"><i data-feather="help-circle"></i><span>Help</span></a>
-                        </li>
-                        <li class="navbar__item">
-                            <a href="#" class="navbar__link"><i data-feather="settings"></i><span>Settings</span></a>
-                        </li>
-                    </ul>
-                </nav>
-            </div>
-
-
+            <ul className="horizontal-menu">
+                <li className="menu-item">
+                    <a href="#" className="menu-link">
+                        <BiText className="menu-icon" />
+                        <span className="menu-text">Text</span>
+                    </a>
+                </li>
+                <li className="menu-item">
+                    <a href="#" className="menu-link">
+                        <AiOutlineHome className="menu-icon" />
+                        <span className="menu-text">Home</span>
+                    </a>
+                </li>
+                <li className="menu-item">
+                    <a href="#" className="menu-link">
+                        <AiOutlineUndo className="menu-icon" />
+                        <span className="menu-text">Undo</span>
+                    </a>
+                </li>
+                <li className="menu-item">
+                    <a href="#" className="menu-link">
+                        <AiOutlineRedo className="menu-icon" />
+                        <span className="menu-text">Redo</span>
+                    </a>
+                </li>
+                <li className="menu-item">
+                    <a href="#" className="menu-link">
+                        <AiOutlineClear className="menu-icon" />
+                        <span className="menu-text">Clear All</span>
+                    </a>
+                </li>
+                <li className="menu-item">
+                    <a href="#" className="menu-link">
+                        <BiSave className="menu-icon" />
+                        <span className="menu-text">Save</span>
+                    </a>
+                </li>
+            </ul>
+            <ul className='vertical-menu'>
+                <li onClick={() => setTool("pencil")}>
+                    <a href="#">
+                        <input
+                            type="radio"
+                            id="pencil"
+                            name="tool"
+                            checked={tool === "pencil"}
+                            value="pencil"
+                            className="tool-radio" // Class to hide the input
+                            onChange={(e) => setTool(e.target.value)}
+                        />
+                        <label htmlFor="pencil">
+                            <BiPencil style={{ fontSize: '20px' }} />
+                            <span>Pencil</span>
+                        </label>
+                    </a>
+                </li>
+                <li onClick={() => setTool("line")}>
+                    <a href="#">
+                        <input
+                            type="radio"
+                            id="line"
+                            name="tool"
+                            checked={tool === "line"}
+                            value="line"
+                            className="tool-radio" // Class to hide the input
+                            onChange={(e) => setTool(e.target.value)}
+                        />
+                        <label htmlFor="line">
+                            <AiOutlineLine style={{ fontSize: '20px' }} />
+                            <span>Line</span>
+                        </label>
+                    </a>
+                </li>
+                <li onClick={() => setTool("ellipse")}>
+                    <a href="#">
+                        <input
+                            type="radio"
+                            id="ellipse"
+                            name="tool"
+                            checked={tool === "ellipse"}
+                            value="ellipse"
+                            className="tool-radio" // Class to hide the input
+                            onChange={(e) => setTool(e.target.value)}
+                        />
+                        <label htmlFor="ellipse">
+                            <BsEgg style={{ fontSize: '20px' }} />
+                            <span>Ellipse</span>
+                        </label>
+                    </a>
+                </li>
+                <li onClick={() => setTool("rectangle")}>
+                    <a href="#">
+                        <input
+                            type="radio"
+                            id="rectangle"
+                            name="tool"
+                            checked={tool === "rectangle"}
+                            value="rectangle"
+                            className="tool-radio" // Class to hide the input
+                            onChange={(e) => setTool(e.target.value)}
+                        />
+                        <label htmlFor="rectangle">
+                            <BiRectangle style={{ fontSize: '20px' }} />
+                            <span>Rectangle</span>
+                        </label>
+                    </a>
+                </li>
+                <li onClick={() => setTool("circle")}>
+                    <a href="#">
+                        <input
+                            type="radio"
+                            id="circle"
+                            name="tool"
+                            checked={tool === "circle"}
+                            value="circle"
+                            className="tool-radio" // Class to hide the input
+                            onChange={(e) => setTool(e.target.value)}
+                        />
+                        <label htmlFor="circle">
+                            <BiCircle style={{ fontSize: '20px' }} />
+                            <span>Circle</span>
+                        </label>
+                    </a>
+                </li>
+                <li onClick={() => setColor("color")}>
+                    <a href="#">
+                        <input
+                            type="color"
+                            name="color"
+                            value={color}
+                            onChange={(e) => setColor(e.target.value)} />
+                        <label htmlFor="color">
+                            {/* <BiColor style={{ fontSize: '20px' }} /> */}
+                            <span>Color</span>
+                        </label>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <BiText />
+                        <span>Text</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <AiOutlineHome />
+                        <span>Home</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <AiOutlineUndo />
+                        <span>Undo</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <AiOutlineRedo />
+                        <span>Redo</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <AiOutlineClear />
+                        <span>Clear All</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <BiSave />
+                        <span>Save</span>
+                    </a>
+                </li>
+            </ul>
 
             <Whiteboard
                 canvasRef={canvasRef}

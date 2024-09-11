@@ -277,15 +277,15 @@ const Whiteboard = ({ canvasRef, ctxRef, elements, setElements, tool, color, set
 
     return (
         <div
-            style={{ height: "100vh", width: "100vw", overflow: "hidden" }}
+            style={{ height: "100%", width: "100%", overflow: "hidden" }}
             onMouseDown={handleMouseDown}
             onMouseUp={handleMouseUp}
             onMouseMove={handleMouseMove}
             className='shadow-lg'>
-            <canvas
+            <canvas style={{ "background": "#fafaf0" }}
                 className='bg-white'
                 ref={canvasRef}></canvas>
-        </div>
+        </div >
     )
 }
 
