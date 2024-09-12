@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap");
+
 *,
 *:after,
 *:before {
@@ -18,13 +19,27 @@
   background-color: #f2f5f7;
 } */
 
+
+
+
+
+/* li:nth-child(7) {
+  margin-top: 5rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid #363664;
+} */
+
+/* li+li {
+  margin-top: 0.75rem;
+} */
+
 .vertical-menu {
   list-style: none;
   position: fixed;
   margin: 0;
   padding: 0;
   margin-left: 3%;
-  margin-top: 2%;
+  margin-top: 10%;
   margin-right: auto;
   background-color: #05043e;
   display: flex;
@@ -36,60 +51,7 @@
   width: 4%;
 }
 
-/* Horizontal menu container */
-.horizontal-menu {
-  list-style-type: none; /* Remove bullet points */
-  padding: 0; /* Remove padding */
-  margin: 0; /* Remove margin */
-  display: flex; /* Use flexbox to make items align horizontally */
-  justify-content: space-around; /* Spread items evenly */
-  background-color: red; /* Background color for the menu */
-  border-bottom: 2px solid #ccc; /* Optional bottom border for separation */
-}
-
-/* Style each menu item */
-.menu-item {
-  margin: 0; /* No extra margin needed for horizontal alignment */
-}
-
-/* Style each menu link */
-.menu-link {
-  display: flex; /* Align icon and text side by side */
-  align-items: center; /* Vertically center content */
-  padding: 10px 20px; /* Padding to make links bigger */
-  text-decoration: none; /* Remove underline from links */
-  color: #333; /* Dark color for text and icons */
-  transition: background-color 0.3s ease; /* Smooth hover transition */
-}
-
-/* Hover effect for the menu links */
-.menu-link:hover {
-  background-color: #ddd; /* Light gray background on hover */
-  border-radius: 5px; /* Optional rounded corners on hover */
-}
-
-/* Icon styling */
-.menu-icon {
-  margin-right: 8px; /* Space between icon and text */
-  font-size: 20px; /* Size of the icon */
-}
-
-/* Text styling */
-.menu-text {
-  font-size: 16px; /* Set a comfortable font size */
-}
-
-li:nth-child(7) {
-  /* margin-top: 5rem; */
-  padding-top: 1.25rem;
-  border-top: 1px solid #363664;
-}
-
-li + li {
-  margin-top: 0.75rem;
-}
-
-a {
+.vertical-menu>li>a {
   color: #fff;
   text-decoration: none;
   display: flex;
@@ -100,22 +62,26 @@ a {
   border-radius: 8px;
   position: relative;
 }
-a:hover,
-a:focus,
-a.active {
+
+.vertical-menu>li>a:hover,
+.vertical-menu>li>a:focus,
+.vertical-menu>li>a.active {
   background-color: #30305a;
   outline: 0;
 }
-a:hover span,
-a:focus span,
-a.active span {
+
+.vertical-menu>li>a:hover span,
+.vertical-menu>li>a:focus span,
+.vertical-menu>li>a.active span {
   transform: scale(1);
   opacity: 1;
 }
-a i {
+
+.vertical-menu>li>a>i {
   font-size: 1.375rem;
 }
-a span {
+
+.vertical-menu>li>a span {
   position: absolute;
   background-color: #30305a;
   white-space: nowrap;
@@ -127,7 +93,8 @@ a span {
   opacity: 0;
   transition: 0.15s ease;
 }
-a span:before {
+
+.vertical-menu>li>a span:before {
   content: "";
   display: block;
   width: 12px;
@@ -136,108 +103,83 @@ a span:before {
   background-color: #30305a;
   left: -5px;
   top: 50%;
-  transform: translatey(-50%) rotate(45deg);
+  transform: translateY(-50%) rotate(45deg);
   border-radius: 3px;
 }
+
+/* Horizontal menu container */
+.horizontal-menu {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  justify-content: space-around;
+  background-color: white;
+  border-bottom: 2px solid #ccc;
+  position: fixed;
+  margin-left: 10%;
+  margin-top: 3%;
+}
+
+.horizontal-menu>li>a {
+  color: black;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 8px;
+  position: relative;
+}
+
+.horizontal-menu>li>a:hover,
+.horizontal-menu>li>a:focus,
+.horizontal-menu>li>a.active {
+  background-color: #ccc;
+  outline: 0;
+}
+
+.horizontal-menu>li>a:hover span,
+.horizontal-menu>li>a:focus span,
+.horizontal-menu>li>a.active span {
+  transform: scale(1);
+  opacity: 1;
+}
+
+.horizontal-menu>li>a>i {
+  font-size: 1.375rem;
+}
+
+.horizontal-menu>li>a span {
+  position: absolute;
+  background-color: #ccc;
+  white-space: nowrap;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  top: calc(100% + 1rem);
+  transform-origin: center top;
+  transform: scale(0);
+  opacity: 0;
+  transition: 0.15s ease;
+}
+
 .tool-radio {
   display: none;
 }
+
 label {
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
 }
-details {
-  position: fixed;
-  right: 1rem;
-  bottom: 1rem;
-  margin-top: 2rem;
-  color: #05043e;
-  display: flex;
-  flex-direction: column;
-}
-details div {
-  background-color: #fff;
-  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
-  padding: 1.25rem;
-  border-radius: 8px;
-  position: absolute;
-  max-height: calc(100vh - 100px);
-  width: 400px;
-  max-width: calc(100vw - 2rem);
-  bottom: calc(100% + 1rem);
-  right: 0;
-  overflow: auto;
-  transform-origin: 100% 100%;
-}
-details div::-webkit-scrollbar {
-  width: 15px;
-  background-color: #fff;
-}
-details div::-webkit-scrollbar-thumb {
-  width: 5px;
-  border-radius: 99em;
-  background-color: #ccc;
-  border: 5px solid #fff;
-}
-details div > * + * {
-  margin-top: 0.75em;
-}
-details div p > code {
-  font-size: 1rem;
-  font-family: monospace;
-  color: #185adb;
-  font-weight: 600;
-}
-details div pre {
-  white-space: pre-line;
-  background-color: #f9f9f9;
-  border: 1px solid #95a3b9;
-  border-radius: 6px;
-  font-family: monospace;
-  padding: 0.75em;
-  font-size: 0.875rem;
-}
-details[open] div {
-  -webkit-animation: scale 0.25s ease;
-  animation: scale 0.25s ease;
-}
-
-summary {
-  display: inline-flex;
-  margin-left: auto;
-  margin-right: auto;
-  justify-content: center;
-  align-items: center;
-  font-weight: 600;
-  padding: 0.625em 1.25em 0.625em 1.25em;
-  border-radius: 99em;
-  color: #fff;
-  background-color: #185adb;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-  list-style: none;
-  text-align: center;
-  cursor: pointer;
-  transition: 0.15s ease;
-  position: relative;
-}
-summary::-webkit-details-marker {
-  display: none;
-}
-summary:hover,
-summary:focus {
-  background-color: #1348af;
-}
-summary i {
-  font-size: 1.375em;
-  margin-left: 0.25em;
-}
 
 @-webkit-keyframes scale {
   0% {
     transform: scale(0);
   }
+
   100% {
     transform: scale(1);
   }
@@ -247,6 +189,7 @@ summary i {
   0% {
     transform: scale(0);
   }
+
   100% {
     transform: scale(1);
   }

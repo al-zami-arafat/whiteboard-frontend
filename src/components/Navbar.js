@@ -6,15 +6,16 @@ import { BiColor, BiPencil, BiRectangle, BiCircle, BiSave, BiText } from "react-
 import { BsEgg } from "react-icons/bs";
 import { updateDrawing, createDrawing } from '../services/api';
 import { useParams } from 'react-router-dom';
-import Navbar from '../components/Navbar';
 
-const RoomPage = () => {
+
+const Navbar = ({ element, handleUndoData }) => {
+    // console.error("🥳 ~ Navbar ~ element:", histories)
     const params = useParams();
     const isIdEmpty = (obj) => Object.keys(obj).length === 0;
 
     const [tool, setTool] = useState("pencil")
     const [color, setColor] = useState("color")
-    const [elements, setElements] = useState([])
+    const [elements, setElements] = useState(element)
     const [history, setHistory] = useState([])
 
     const canvasRef = useRef(null)
@@ -32,8 +33,7 @@ const RoomPage = () => {
     }
 
     function handleUndo() {
-        // setHistory(data)
-        console.log("undo", history)
+        console.log("undo")
         setHistory(prevHistory => [
             ...prevHistory, elements[elements.length - 1]
         ])
@@ -45,7 +45,7 @@ const RoomPage = () => {
         if (elements.length === 1) {
             handleClear()
         }
-
+        handleUndoData(history)
     }
 
     function handleRedo() {
@@ -191,128 +191,42 @@ const RoomPage = () => {
                     </div>
                 }
             </div> */}
-            <button className="undo mx-2 bg-white shadow-lg rounded-md px-2 py-1"
-                onClick={handleUndo}
-                disabled={elements.length === 0}>Undo</button>
-            <Navbar element={elements} handleUndoData={handleUndo} />
-            <ul className='vertical-menu'>
-                <li onClick={() => setTool("pencil")}>
-                    <a href="#">
-                        <input
-                            type="radio"
-                            id="pencil"
-                            name="tool"
-                            checked={tool === "pencil"}
-                            value="pencil"
-                            className="tool-radio" // Class to hide the input
-                            onChange={(e) => setTool(e.target.value)}
-                        />
-                        <label htmlFor="pencil">
-                            <BiPencil style={{ fontSize: '20px' }} />
-                            <span>Pencil</span>
-                        </label>
+
+            <ul className="horizontal-menu">
+                <li className="menu-item">
+                    <a href="#" className="menu-link">
+                        <AiOutlineHome className="menu-icon" />
+                        <span className="menu-text">Home</span>
                     </a>
                 </li>
-                <li onClick={() => setTool("line")}>
-                    <a href="#">
-                        <input
-                            type="radio"
-                            id="line"
-                            name="tool"
-                            checked={tool === "line"}
-                            value="line"
-                            className="tool-radio" // Class to hide the input
-                            onChange={(e) => setTool(e.target.value)}
-                        />
-                        <label htmlFor="line">
-                            <AiOutlineLine style={{ fontSize: '20px' }} />
-                            <span>Line</span>
-                        </label>
+
+                <li className="menu-item" onClick={handleUndo} disabled={elements.length === 0}>
+                    <a href="#" className="menu-link">
+                        <AiOutlineUndo className="menu-icon" />
+                        <span className="menu-text">Undo</span>
                     </a>
                 </li>
-                <li onClick={() => setTool("ellipse")}>
-                    <a href="#">
-                        <input
-                            type="radio"
-                            id="ellipse"
-                            name="tool"
-                            checked={tool === "ellipse"}
-                            value="ellipse"
-                            className="tool-radio" // Class to hide the input
-                            onChange={(e) => setTool(e.target.value)}
-                        />
-                        <label htmlFor="ellipse">
-                            <BsEgg style={{ fontSize: '20px' }} />
-                            <span>Ellipse</span>
-                        </label>
+                <li className="menu-item">
+                    <a href="#" className="menu-link">
+                        <AiOutlineRedo className="menu-icon" />
+                        <span className="menu-text">Redo</span>
                     </a>
                 </li>
-                <li onClick={() => setTool("rectangle")}>
-                    <a href="#">
-                        <input
-                            type="radio"
-                            id="rectangle"
-                            name="tool"
-                            checked={tool === "rectangle"}
-                            value="rectangle"
-                            className="tool-radio" // Class to hide the input
-                            onChange={(e) => setTool(e.target.value)}
-                        />
-                        <label htmlFor="rectangle">
-                            <BiRectangle style={{ fontSize: '20px' }} />
-                            <span>Rectangle</span>
-                        </label>
+                <li className="menu-item">
+                    <a href="#" className="menu-link">
+                        <AiOutlineClear className="menu-icon" />
+                        <span className="menu-text">Clear All</span>
                     </a>
                 </li>
-                <li onClick={() => setTool("circle")}>
-                    <a href="#">
-                        <input
-                            type="radio"
-                            id="circle"
-                            name="tool"
-                            checked={tool === "circle"}
-                            value="circle"
-                            className="tool-radio" // Class to hide the input
-                            onChange={(e) => setTool(e.target.value)}
-                        />
-                        <label htmlFor="circle">
-                            <BiCircle style={{ fontSize: '20px' }} />
-                            <span>Circle</span>
-                        </label>
-                    </a>
-                </li>
-                <li onClick={() => setColor("color")}>
-                    <a href="#">
-                        <input
-                            type="color"
-                            name="color"
-                            value={color}
-                            onChange={(e) => setColor(e.target.value)} />
-                        <label htmlFor="color">
-                            {/* <BiColor style={{ fontSize: '20px' }} /> */}
-                            <span>Color</span>
-                        </label>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <BiText />
-                        <span>Text</span>
+                <li className="menu-item">
+                    <a href="#" className="menu-link">
+                        <BiSave className="menu-icon" />
+                        <span className="menu-text">Save</span>
                     </a>
                 </li>
             </ul>
-
-            <Whiteboard
-                canvasRef={canvasRef}
-                ctxRef={ctxRef}
-                elements={elements}
-                setElements={setElements}
-                tool={tool}
-                color={color}
-                setColor={setColor} />
-
         </div>
     )
 }
 
-export default RoomPage
+export default Navbar
